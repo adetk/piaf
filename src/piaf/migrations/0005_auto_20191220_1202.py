@@ -24,6 +24,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='userrelevancy',
             name='user',
-            field=models.ForeignKey(on_delete='cascade', related_name='relevancies', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='relevancies', to=settings.AUTH_USER_MODEL),
         ),
     ]

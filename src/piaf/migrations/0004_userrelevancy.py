@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('level', models.PositiveSmallIntegerField(max_length=1)),
                 ('score', models.PositiveIntegerField(max_length=1)),
                 ('created_at', models.DateField(auto_now_add=True)),
-                ('user', models.ForeignKey(on_delete='cascade', related_name='relavancies', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=models.CASCADE, related_name='relavancies', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

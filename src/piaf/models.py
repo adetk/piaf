@@ -32,7 +32,7 @@ class Article(models.Model):
 
 
 class ParagraphBatch(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete="null")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
     participated_at = models.DateField(auto_now=True)
     status = models.CharField(
         max_length=10, choices=zip(STATUSES, STATUSES), default="pending"
@@ -66,7 +66,7 @@ class Paragraph(models.Model):
         max_length=10, choices=zip(STATUSES, STATUSES), default="pending"
     )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name="paragraphs", on_delete="null", null=True
+        settings.AUTH_USER_MODEL, related_name="paragraphs", on_delete=models.SET_NULL, null=True
     )
 
     def complete(self, questions_answers, user=None):
@@ -118,7 +118,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete="null", related_name="answers", null=True
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="answers", null=True
     )
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers")
     text = models.CharField(max_length=200)

@@ -13,7 +13,7 @@ also be set in a `.env` file in the project base directory.
 from os import path
 from pathlib import Path
 
-import django_heroku
+# import django_heroku
 import dj_database_url
 from environs import Env
 from furl import furl
@@ -198,7 +198,7 @@ LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/app/"
 LOGOUT_REDIRECT_URL = "/"
 
-django_heroku.settings(locals(), test_runner=False)
+# django_heroku.settings(locals(), test_runner=False)
 
 # Change 'default' database configuration with $DATABASE_URL.
 DATABASES["default"].update(
@@ -249,15 +249,38 @@ else:
     ## During development only
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "[%(asctime)s] [%(process)d] [%(levelname)s] [%(name)s::%(funcName)s::%(lineno)d] %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S %z",
+        }
+    },
     "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
         "file": {
             "level": "ERROR",
             "class": "logging.FileHandler",
             "filename": str(BASE_PATH / "debug.log"),
         }
     },
-    "loggers": {"django": {"handlers": ["file"], "level": "ERROR", "propagate": True}},
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": True
+        }
+    },
 }

@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.TextField()),
                 ('status', models.CharField(choices=[('pending', 'pending'), ('progress', 'progress'), ('completed', 'completed')], default='pending', max_length=10)),
-                ('article', models.ForeignKey(on_delete='cascade', related_name='paragraphs', to='piaf.Article')),
+                ('article', models.ForeignKey(on_delete=models.CASCADE, related_name='paragraphs', to='piaf.Article')),
             ],
         ),
         migrations.CreateModel(
@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('participated_at', models.DateField(auto_now=True)),
                 ('status', models.CharField(choices=[('pending', 'pending'), ('progress', 'progress'), ('completed', 'completed')], default='pending', max_length=10)),
-                ('user', models.ForeignKey(null=True, on_delete='null', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(null=True, on_delete=models.SET_NULL, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -56,27 +56,27 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.CharField(max_length=200)),
                 ('created_at', models.DateField(auto_now_add=True)),
-                ('paragraph', models.ForeignKey(on_delete='cascade', related_name='questions', to='piaf.Paragraph')),
+                ('paragraph', models.ForeignKey(on_delete=models.CASCADE, related_name='questions', to='piaf.Paragraph')),
             ],
         ),
         migrations.AddField(
             model_name='paragraph',
             name='batch',
-            field=models.ForeignKey(on_delete='cascade', related_name='paragraphs', to='piaf.ParagraphBatch'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='paragraphs', to='piaf.ParagraphBatch'),
         ),
         migrations.AddField(
             model_name='paragraph',
             name='user',
-            field=models.ForeignKey(null=True, on_delete='null', related_name='paragraphs', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(null=True, on_delete=models.SET_NULL, related_name='paragraphs', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='answer',
             name='question',
-            field=models.ForeignKey(on_delete='cascade', related_name='answers', to='piaf.Question'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='answers', to='piaf.Question'),
         ),
         migrations.AddField(
             model_name='answer',
             name='user',
-            field=models.ForeignKey(null=True, on_delete='null', related_name='answers', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(null=True, on_delete=models.SET_NULL, related_name='answers', to=settings.AUTH_USER_MODEL),
         ),
     ]

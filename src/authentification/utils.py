@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth import login
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from .tokens import account_activation_token
 from django.contrib.auth import get_user_model
@@ -14,7 +14,7 @@ User = get_user_model()
 def activate(request, uidb64, token):
     error = False
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except Exception as e:
         user = None
